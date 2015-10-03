@@ -2,10 +2,9 @@ Twitch = require 'tmi.js'
 
 class module.exports
     constructor: (@NexerqBot) ->
-        @client = null
 
     connect: =>
-        @client = new Twitch.client
+        client = @NexerqBot.Clients.twitch = new Twitch.client
             options:
                 debug: @NexerqBot.Config.debug
             connection:
@@ -17,10 +16,10 @@ class module.exports
             channels: @NexerqBot.Config.twitch.chat.channels
 
         # Set up events
-        @client.on 'chat', (channel, user, message) =>
+        client.on 'chat', (channel, user, message) =>
             @NexerqBot.Events.emit('twitch.chat', {channel: channel, user: user, message: message})
 
-        @client.on 'action', (channel, user, message) =>
+        client.on 'action', (channel, user, message) =>
             @NexerqBot.Events.emit('twitch.action', {channel: channel, user: user, message: message})
 
-        @client.connect()
+        client.connect()
