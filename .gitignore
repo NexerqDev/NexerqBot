@@ -7,3 +7,4 @@ node_modules
 
 # Config
 config/config.coffee
+config/sequelize.json
