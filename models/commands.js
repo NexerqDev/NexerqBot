@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     channel: DataTypes.STRING,
     command: DataTypes.STRING,
     output: DataTypes.STRING,
-    count: DataTypes.INTEGER,
+    count: {type: DataTypes.INTEGER, defaultValue: 0},
     addedBy: DataTypes.STRING
   });
 
