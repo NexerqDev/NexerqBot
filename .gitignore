@@ -1,0 +1,9 @@
+# node
+npm-debug.log
+node_modules
+
+# Mac
+.DS_Store
+
+# Config
+config/config.coffee

@@ -1,0 +1,7 @@
+module.exports =
+    debug: true
+    twitch:
+        chat:
+            login:
+                username: 'NexerqBot'
+                password: 'oauth:'
