@@ -4,7 +4,7 @@
   "description": "Another copycat twitch.tv chatbot, to say the least.",
   "main": "bot.coffee",
   "scripts": {
-    "start": "./node_modules/coffee-script/bin/coffee bot.coffee"
+    "start": "./node_modules/coffee-script/bin/coffee bot.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nicholas Tay <nexerq@gmail.com> (http://nicholastay.github.io)",
