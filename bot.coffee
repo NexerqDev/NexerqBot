@@ -1,4 +1,5 @@
-repl = require 'repl'
+nesh = require 'nesh'
+fs = require 'fs'
 events = require 'events'
 
 class NexerqBotClass
@@ -23,6 +24,14 @@ NexerqBot.Modules.global = new global NexerqBot
 NexerqBot.twitch.connect()
 
 # REPL Server
-replServer = repl.start
+nesh.config.load()
+nesh.loadLanguage 'coffee'
+# Get welcome ver from package json
+packagedata = JSON.parse fs.readFileSync './package.json', 'utf8'
+nesh.start
+    welcome: "NexerqBot v#{packagedata.version} 2015 (twitch username: #{config.twitch.chat.login.username})"
     prompt: 'NexerqBot » '
-replServer.context.nb = NexerqBot
+    useGlobal: true,
+    (err, repl) ->
+        nesh.log.error err if err
+        repl.context.NexerqBot = NexerqBot
