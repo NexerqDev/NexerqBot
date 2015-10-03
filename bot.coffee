@@ -1,28 +1,28 @@
 repl = require 'repl'
 events = require 'events'
 
-class NexerqBot
+class NexerqBotClass
     constructor: ->
         @Config = {}
         @Modules = {}
         @Events = new events.EventEmitter()
 
 
-bot = new NexerqBot
+NexerqBot = new NexerqBotClass
 
 config = require './config/config'
-bot.Config = config
+NexerqBot.Config = config
 
 twitch = require './main/twitch'
-bot.twitch = new twitch bot
+NexerqBot.twitch = new twitch NexerqBot
 
 global = require './modules/global'
-bot.Modules.global = new global bot
+NexerqBot.Modules.global = new global NexerqBot
 
 # Connect
-bot.twitch.connect()
+NexerqBot.twitch.connect()
 
 # REPL Server
 replServer = repl.start
     prompt: 'NexerqBot » '
-replServer.context.nb = bot
+replServer.context.nb = NexerqBot
