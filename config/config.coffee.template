@@ -5,3 +5,8 @@ module.exports =
             login:
                 username: 'NexerqBot'
                 password: 'oauth:'
+            channels: ['#channel']
+    bot:
+        modules:
+            global:
+                commandprefix: '!nb'

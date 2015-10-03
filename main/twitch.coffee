@@ -7,13 +7,20 @@ class module.exports
     connect: =>
         @client = new Twitch.client
             options:
-                debug: @NexerqBot.config.debug
+                debug: @NexerqBot.Config.debug
             connection:
                 random: 'chat'
                 reconnect: true
             identity:
-                username: @NexerqBot.config.twitch.chat.login.username
-                password: @NexerqBot.config.twitch.chat.login.password
-            channels: []
+                username: @NexerqBot.Config.twitch.chat.login.username
+                password: @NexerqBot.Config.twitch.chat.login.password
+            channels: @NexerqBot.Config.twitch.chat.channels
+
+        # Set up events
+        @client.on 'chat', (channel, user, message) =>
+            @NexerqBot.Events.emit('twitch.chat', {channel: channel, user: user, message: message})
+
+        @client.on 'action', (channel, user, message) =>
+            @NexerqBot.Events.emit('twitch.action', {channel: channel, user: user, message: message})
 
         @client.connect()
