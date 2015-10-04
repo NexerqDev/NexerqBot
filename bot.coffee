@@ -32,7 +32,7 @@ for mod in chatModules
     NexerqBot.Modules[modName] = new mod NexerqBot
 
 # Connect
-NexerqBot.Main.twitch.connect()
+NexerqBot.Main.Twitch.connect()
 
 # Nesh REPL Server
 nesh.config.load()

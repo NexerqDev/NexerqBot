@@ -4,7 +4,7 @@ class module.exports
     constructor: (@NexerqBot) ->
 
     connect: =>
-        client = @NexerqBot.Clients.twitch = new Twitch.client
+        client = @NexerqBot.Clients.Twitch = new Twitch.client
             options:
                 debug: @NexerqBot.Config.debug
             connection:

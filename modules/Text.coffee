@@ -31,7 +31,7 @@ class module.exports
                         command: command
                     attributes: ['output']
                 .then (dbResp) =>
-                    @NexerqBot.Clients.twitch.say data.channel, dbResp.output
+                    @NexerqBot.Clients.Twitch.say data.channel, dbResp.output
 
     addChannelCommand: (channel, command, output, username) =>
         return dbModels.commands.create
@@ -50,22 +50,22 @@ class module.exports
         cleanChannel = data.channel.replace('#', '')
         command = data.message.split(' ')
         if command[0] is @NexerqBot.Config.bot.modules.global.commandprefix
-            if @NexerqBot.Main.user.isChatMod(cleanChannel, data.user)
+            if @NexerqBot.Main.User.isChatMod(cleanChannel, data.user)
                 if command[1] is 'command' and command[2] and command[3] # command[2] and [3] make sure third and fourth params arent falsy; command[3] is the command
                     if command[2] is 'add' and command[4] # Ensure there is an output
                         # Add command
                         if command[3] in @commands[cleanChannel]
-                            @NexerqBot.Clients.twitch.say data.channel, 'The command you are trying to add already exists. Nothing has been changed.'
+                            @NexerqBot.Clients.Twitch.say data.channel, 'The command you are trying to add already exists. Nothing has been changed.'
                         else
                             @addChannelCommand cleanChannel, command[3], command[4], data.user.username
                             .then =>
                                 @cacheCommandsFromDB()
-                                @NexerqBot.Clients.twitch.say data.channel, 'Command was added to the channel\'s command set.'
+                                @NexerqBot.Clients.Twitch.say data.channel, 'Command was added to the channel\'s command set.'
                     else if command[2] is 'remove'
                         if command[3] not in @commands[cleanChannel]
-                            @NexerqBot.Clients.twitch.say data.channel, 'The command you are trying to remove does not exist. Nothing has been changed.'
+                            @NexerqBot.Clients.Twitch.say data.channel, 'The command you are trying to remove does not exist. Nothing has been changed.'
                         else
                             @removeChannelCommand cleanChannel, command[3]
                             .then =>
                                 @cacheCommandsFromDB()
-                                @NexerqBot.Clients.twitch.say data.channel, 'Command was removed from the channel\'s command set.'
+                                @NexerqBot.Clients.Twitch.say data.channel, 'Command was removed from the channel\'s command set.'
