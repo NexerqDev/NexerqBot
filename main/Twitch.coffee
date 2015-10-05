@@ -22,4 +22,7 @@ class module.exports
         client.on 'action', (channel, user, message) =>
             @NexerqBot.Events.emit('twitch.action', {channel: channel, user: user, message: message})
 
+        client.on 'connected', =>
+            @NexerqBot.Logging.info 'Twitch Chat', 'Connected to twitch chat servers.'
+
         client.connect()

@@ -8,10 +8,10 @@ class module.exports
 
     connect: =>
         @client.on 'connected', =>
-          console.log('Connected to osu!bancho IRC.')
+            @NexerqBot.Logging.info 'osu! Chat', 'Connected to osu!bancho IRC.'
 
         @client.on 'error', (data) =>
-          console.log('osu! client error: ' + data.message)
+            @NexerqBot.Logging.log 'osu! Chat', 'osu! client error: ' + data.message
 
         @client.on 'pm', (data) =>
             @NexerqBot.Events.emit('osu.message', data)

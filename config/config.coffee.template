@@ -1,5 +1,5 @@
 module.exports =
-    debug: true
+    debug: false
     twitch:
         chat:
             login:
