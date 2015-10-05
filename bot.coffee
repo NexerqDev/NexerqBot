@@ -22,7 +22,7 @@ mainModules = fs.readdirSync './main'
 for mod in mainModules
     modName = mod.replace('.coffee', '')
     mod = require("./main/#{modName}")
-    NexerqBot.Main[modName] = new mod NexerqBot
+    NexerqBot[modName] = new mod NexerqBot
 
 # Load modules (chat handlers, etc) [for files in ./modules]
 chatModules = fs.readdirSync './modules'
@@ -32,7 +32,8 @@ for mod in chatModules
     NexerqBot.Modules[modName] = new mod NexerqBot
 
 # Connect
-NexerqBot.Main.Twitch.connect()
+NexerqBot.Twitch.connect()
+NexerqBot.OsuChat.connect()
 
 # Nesh REPL Server
 nesh.config.load()
@@ -46,3 +47,4 @@ nesh.start
     (err, repl) ->
         nesh.log.error err if err
         repl.context.NexerqBot = NexerqBot
+console.log '\n'
