@@ -50,7 +50,7 @@ class module.exports
         cleanChannel = data.channel.replace('#', '')
         command = data.message.split(' ')
         if command[0] is @NexerqBot.Config.bot.modules.global.commandprefix
-            if @NexerqBot.Main.User.isChatMod(cleanChannel, data.user)
+            if @NexerqBot.Modules.User.isChatMod(cleanChannel, data.user)
                 if command[1] is 'command' and command[2] and command[3] # command[2] and [3] make sure third and fourth params arent falsy; command[3] is the command
                     if command[2] is 'add' and command[4] # Ensure there is an output
                         # Add command
