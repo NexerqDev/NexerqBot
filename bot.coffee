@@ -20,13 +20,9 @@ NexerqBot.Config = config
 
 # Load the main client modules (for files in ./main)
 for mod in fs.readdirSync './main'
-    if path.extname(mod) is not '.coffee'
-        continue
-
+    continue if path.extname(mod) isnt '.coffee'
     modName = mod.replace '.coffee', ''
-
-    if modName in NexerqBot.Config.disabled.main
-        continue
+    continue if modName in NexerqBot.Config.disabled.main
 
     mod = require "./main/#{modName}"
     NexerqBot[modName] = new mod NexerqBot
@@ -39,13 +35,9 @@ for mod in fs.readdirSync './main'
 
 # Load modules (chat handlers, etc) [for files in ./modules]
 for mod in fs.readdirSync './modules'
-    if path.extname(mod) is not '.coffee'
-        continue
-
+    continue if path.extname(mod) isnt '.coffee'
     modName = mod.replace('.coffee', '')
-
-    if modName in NexerqBot.Config.disabled.modules
-        continue
+    continue if modName in NexerqBot.Config.disabled.modules
 
     mod = require "./modules/#{modName}"
     NexerqBot.Modules[modName] = new mod NexerqBot
