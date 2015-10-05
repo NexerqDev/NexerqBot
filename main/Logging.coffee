@@ -8,6 +8,9 @@ class module.exports
     log: (modulename, type, message) ->
         console.log "#{strftime '[%l:%M%P]'}".cyan, "[#{modulename}]".magenta, "#{type}:".reset, "#{message}".reset
 
+    logNoType: (modulename, message) ->
+        console.log "#{strftime '[%l:%M%P]'}".cyan, "[#{modulename}]".magenta, "#{message}".reset
+
     info: (modulename, message) =>
         @log modulename, 'info'.green, message
 
