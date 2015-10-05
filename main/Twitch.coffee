@@ -6,7 +6,7 @@ class module.exports
     connect: =>
         client = @NexerqBot.Clients.Twitch = new Twitch.client
             options:
-                debug: @NexerqBot.Config.debug
+                debug: @NexerqBot.Config.twitch.debug
             connection:
                 random: 'chat'
                 reconnect: true

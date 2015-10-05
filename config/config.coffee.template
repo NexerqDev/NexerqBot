@@ -1,6 +1,6 @@
 module.exports =
-    debug: false
     twitch:
+        debug: false
         chat:
             login:
                 username: 'NexerqBot'
