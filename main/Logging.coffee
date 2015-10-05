@@ -1,4 +1,4 @@
-color = require '../other/terminalcolor'
+colors = require 'colors'
 strftime = require 'strftime'
 
 # Some functions to output to the console with color
@@ -6,19 +6,19 @@ class module.exports
     constructor: (@NexerqBot) ->
 
     log: (modulename, type, message) ->
-        console.log "#{color.foregroundCyan}#{strftime '[%l:%M%P]'} #{color.foregroundMagenta}[#{modulename}] #{color.formatReset}#{type}: #{color.formatReset}#{message}"
+        console.log "#{strftime '[%l:%M%P]'}".cyan, "[#{modulename}]".magenta, "#{type}:".reset, "#{message}".reset
 
     info: (modulename, message) =>
-        @log modulename, "#{color.foregroundGreen}info", message
+        @log modulename, 'info'.green, message
 
     error: (modulename, message) =>
-        @log modulename, "#{color.foregroundRed}error", message
+        @log modulename, 'error'.red, message
 
     warn: (modulename, message) =>
-        @log modulename, "#{color.foregroundYellow}warn", message
+        @log modulename, 'warn'.yellow, message
 
     success: (modulename, message) =>
-        @log modulename, "#{color.foregroundGreen}success", message
+        @log modulename, 'success'.green, message
 
     fail: (modulename, message) =>
-        @log modulename, "#{color.foregroundRed}fail", message
+        @log modulename, 'fail'.red, message
