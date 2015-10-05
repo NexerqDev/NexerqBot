@@ -1,4 +1,5 @@
 Osu = require 'nodesu'
+colors = require 'colors'
 
 class module.exports
     constructor: (@NexerqBot) ->
@@ -14,7 +15,7 @@ class module.exports
             @NexerqBot.Logging.error 'osu! Chat', 'osu! client error: ' + data.message
 
         @client.on 'pm', (data) =>
-            @NexerqBot.Logging.logNoType 'osu! Chat', "<#{data.from} -> #{@NexerqBot.Config.osu.chat.login.username}> #{message}"
+            @NexerqBot.Logging.logNoType 'osu! Chat', "#{colors.yellow "#{data.from} -> #{@NexerqBot.Config.osu.chat.login.username}"} #{message}"
             @NexerqBot.Events.emit('osu.message', data)
 
         @client.connect()

@@ -1,4 +1,5 @@
 Twitch = require 'tmi.js'
+colors = require 'colors'
 
 class module.exports
     constructor: (@NexerqBot) ->
@@ -17,11 +18,11 @@ class module.exports
 
         # Set up events
         client.on 'chat', (channel, user, message) =>
-            @NexerqBot.Logging.logNoType 'Twitch Chat', "<#{channel}> #{user['display-name']}: #{message}"
+            @NexerqBot.Logging.logNoType 'Twitch Chat', "#{colors.yellow channel} #{colors.green user['display-name']}: #{message}"
             @NexerqBot.Events.emit('twitch.chat', {channel: channel, user: user, message: message})
 
         client.on 'action', (channel, user, message) =>
-            @NexerqBot.Logging.logNoType 'Twitch Chat', "<#{channel}> * #{user['display-name']} #{message}"
+            @NexerqBot.Logging.logNoType 'Twitch Chat', "#{colors.yellow channel} #{colors.green "* #{user['display-name']} #{message}"}"
             @NexerqBot.Events.emit('twitch.action', {channel: channel, user: user, message: message})
 
         client.on 'connected', =>
