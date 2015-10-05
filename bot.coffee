@@ -24,6 +24,12 @@ for mod in mainModules
     if modName not in NexerqBot.Config.disabled.main
         mod = require("./main/#{modName}")
         NexerqBot[modName] = new mod NexerqBot
+        # Try to connect to clients
+        try
+            NexerqBot[modName].connect()
+        catch e
+            # Not all main modules have connect() so w/e
+        
 
 # Load modules (chat handlers, etc) [for files in ./modules]
 chatModules = fs.readdirSync './modules'
@@ -32,13 +38,6 @@ for mod in chatModules
     if modName not in NexerqBot.Config.disabled.modules
         mod = require("./modules/#{modName}")
         NexerqBot.Modules[modName] = new mod NexerqBot
-
-# Connect
-if 'Twitch' not in NexerqBot.Config.disabled.main
-    NexerqBot.Twitch.connect()
-
-if 'OsuChat' not in NexerqBot.Config.disabled.main
-    NexerqBot.OsuChat.connect()
 
 # Nesh REPL Server
 nesh.config.load()
