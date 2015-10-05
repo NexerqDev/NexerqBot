@@ -21,19 +21,24 @@ NexerqBot.Config = config
 mainModules = fs.readdirSync './main'
 for mod in mainModules
     modName = mod.replace('.coffee', '')
-    mod = require("./main/#{modName}")
-    NexerqBot[modName] = new mod NexerqBot
+    if modName not in NexerqBot.Config.disabled.main
+        mod = require("./main/#{modName}")
+        NexerqBot[modName] = new mod NexerqBot
 
 # Load modules (chat handlers, etc) [for files in ./modules]
 chatModules = fs.readdirSync './modules'
 for mod in chatModules
     modName = mod.replace('.coffee', '')
-    mod = require("./modules/#{modName}")
-    NexerqBot.Modules[modName] = new mod NexerqBot
+    if modName not in NexerqBot.Config.disabled.modules
+        mod = require("./modules/#{modName}")
+        NexerqBot.Modules[modName] = new mod NexerqBot
 
 # Connect
-NexerqBot.Twitch.connect()
-NexerqBot.OsuChat.connect()
+if 'Twitch' not in NexerqBot.Config.disabled.main
+    NexerqBot.Twitch.connect()
+
+if 'OsuChat' not in NexerqBot.Config.disabled.main
+    NexerqBot.OsuChat.connect()
 
 # Nesh REPL Server
 nesh.config.load()
