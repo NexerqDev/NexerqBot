@@ -6,7 +6,11 @@ module.exports =
                 username: 'NexerqBot'
                 password: 'oauth:'
             channels: ['#channel']
-    bot:
-        modules:
-            global:
-                commandprefix: '!nb'
+    osu:
+        chat:
+            login:
+                username: 'Nexerq'
+                password: 'https://osu.ppy.sh/p/irc'
+    modules:
+        global:
+            commandprefix: '!nb'
