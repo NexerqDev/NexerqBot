@@ -1,6 +1,7 @@
 nesh = require 'nesh'
 fs = require 'fs'
 events = require 'events'
+path = require 'path'
 
 class NexerqBotClass
     constructor: ->
@@ -18,26 +19,37 @@ config = require './config/config'
 NexerqBot.Config = config
 
 # Load the main client modules (for files in ./main)
-mainModules = fs.readdirSync './main'
-for mod in mainModules
-    modName = mod.replace('.coffee', '')
-    if modName not in NexerqBot.Config.disabled.main
-        mod = require("./main/#{modName}")
-        NexerqBot[modName] = new mod NexerqBot
-        # Try to connect to clients
-        try
-            NexerqBot[modName].connect()
-        catch e
-            # Not all main modules have connect() so w/e
+for mod in fs.readdirSync './main'
+    if path.extname(mod) is not '.coffee'
+        continue
+
+    modName = mod.replace '.coffee', ''
+
+    if modName in NexerqBot.Config.disabled.main
+        continue
+
+    mod = require "./main/#{modName}"
+    NexerqBot[modName] = new mod NexerqBot
+    # Try to connect to clients
+    try
+        NexerqBot[modName].connect()
+    catch e
+        # Not all main modules have connect() so w/e
         
 
 # Load modules (chat handlers, etc) [for files in ./modules]
-chatModules = fs.readdirSync './modules'
-for mod in chatModules
+for mod in fs.readdirSync './modules'
+    if path.extname(mod) is not '.coffee'
+        continue
+
     modName = mod.replace('.coffee', '')
-    if modName not in NexerqBot.Config.disabled.modules
-        mod = require("./modules/#{modName}")
-        NexerqBot.Modules[modName] = new mod NexerqBot
+
+    if modName in NexerqBot.Config.disabled.modules
+        continue
+
+    mod = require "./modules/#{modName}"
+    NexerqBot.Modules[modName] = new mod NexerqBot
+
 
 # Nesh REPL Server
 nesh.config.load()
