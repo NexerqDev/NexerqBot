@@ -19,13 +19,14 @@ class module.exports
         # Set up events
         client.on 'chat', (channel, user, message) =>
             @NexerqBot.Logging.logNoType 'Twitch Chat', "#{colors.yellow channel} #{colors.green user['display-name']}: #{message}"
-            @NexerqBot.Events.emit('twitch.chat', {channel: channel, user: user, message: message})
+            @NexerqBot.Events.emit 'twitch.chat', channel, user, message
 
         client.on 'action', (channel, user, message) =>
             @NexerqBot.Logging.logNoType 'Twitch Chat', "#{colors.yellow channel} #{colors.green "* #{user['display-name']} #{message}"}"
-            @NexerqBot.Events.emit('twitch.action', {channel: channel, user: user, message: message})
+            @NexerqBot.Events.emit 'twitch.action', channel, user, message
 
         client.on 'connected', =>
             @NexerqBot.Logging.info 'Twitch Chat', 'Connected to twitch chat servers.'
+            @NexerqBot.Events.emit 'twitch.connected'
 
         client.connect()
