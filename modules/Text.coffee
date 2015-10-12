@@ -1,5 +1,4 @@
 # Text commands, mods and broadcaster can create, remove and modify them.
-dbModels = require '../models'
 
 class module.exports
     constructor: (@NexerqBot) ->
@@ -12,7 +11,7 @@ class module.exports
 
     cacheCommandsFromDB: =>
         @commands = {}
-        dbModels.commands.findAll
+        @NexerqBot.Database.Model.commands.findAll
             attributes: ['channel', 'command']
         .then (commands) =>
             for data in commands
@@ -25,7 +24,7 @@ class module.exports
         command = message.split(' ')[0]
         if @commands[cleanChannel]
             if command in @commands[cleanChannel]
-                dbModels.commands.findOne
+                @NexerqBot.Database.Model.commands.findOne
                     where:
                         channel: cleanChannel
                         command: command
@@ -34,14 +33,14 @@ class module.exports
                     @NexerqBot.Clients.Twitch.say channel, dbResp.output
 
     addChannelCommand: (channel, command, output, username) =>
-        return dbModels.commands.create
+        return @NexerqBot.Database.Model.commands.create
             channel: channel
             command: command
             output: output
             addedBy: username
 
     removeChannelCommand: (channel, command) =>
-        return dbModels.commands.destroy
+        return @NexerqBot.Database.Model.commands.destroy
             where:
                 channel: channel
                 command: command

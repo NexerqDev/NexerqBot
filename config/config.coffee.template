@@ -9,6 +9,12 @@ module.exports =
                 username: 'NexerqBot'
                 password: 'oauth:'
             channels: ['#channel']
+    database:
+        username: 'postgres'
+        password: 'postgres'
+        database: 'nexerqbot'
+        host: '127.0.0.1'
+        dialect: 'postgres'
     osu:
         chat:
             login:
