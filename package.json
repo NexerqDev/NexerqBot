@@ -20,6 +20,7 @@
     "sequelize": "^3.10.0",
     "sequelize-cli": "^1.9.1",
     "strftime": "^0.9.2",
-    "tmi.js": "0.0.23"
+    "tmi.js": "0.0.23",
+    "xtend": "^4.0.0"
   }
 }
