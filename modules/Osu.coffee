@@ -4,6 +4,11 @@ class module.exports
     constructor: (@NexerqBot) ->
         @NexerqBot.Events.on 'twitch.chat', (channel, user, message) => 
             @checkForBeatmaps channel, user, message
+
+    defaultConfig:
+        requests:
+            channel:
+                n2468txd: 'Nexerq'
     
     checkForBeatmaps: (channel, user, message) =>
         cleanChannel = channel.replace '#', ''

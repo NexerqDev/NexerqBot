@@ -4,10 +4,17 @@ colors = require 'colors'
 class module.exports
     constructor: (@NexerqBot) ->
 
+    defaultConfig:
+        chat:
+            login:
+                username: 'NexerqBot'
+                password: 'oauth:'
+            channels: ['#channel']
+
     connect: =>
         client = @NexerqBot.Clients.Twitch = new Twitch.client
             options:
-                debug: @NexerqBot.Config.twitch.debug
+                debug: false
             connection:
                 random: 'chat'
                 reconnect: true

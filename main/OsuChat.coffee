@@ -4,6 +4,11 @@ colors = require 'colors'
 class module.exports
     constructor: (@NexerqBot) ->
 
+    defaultConfig:
+        login:
+            username: 'Nexerq'
+            password: 'https://osu.ppy.sh/p/irc'
+
     connect: =>
         @client = @NexerqBot.Clients.OsuChat = new Osu.chat
             username: @NexerqBot.Config.osu.chat.login.username
