@@ -11,7 +11,7 @@ class module.exports
                 password: 'oauth:'
             channels: ['#channel']
 
-    connect: =>
+    connect: ->
         client = @NexerqBot.Clients.Twitch = new Twitch.client
             options:
                 debug: false

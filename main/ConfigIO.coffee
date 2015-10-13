@@ -30,9 +30,7 @@ class module.exports
 
         if not @NexerqBot.Config.modules then @NexerqBot.Config.modules = {}
 
-        for mod in fs.readdirSync './modules'
-            continue if path.extname mod isnt '.coffee'
-            modName = mod.replace '.coffee', ''
+        for modName in Object.keys @NexerqBot.Modules
             if not @NexerqBot.Config.modules[modName.toLowerCase()] and @NexerqBot.Modules[modName].defaultConfig
                 @NexerqBot.Logging.info 'ConfigIO', "Configuration not found for handler module '#{modName}', creating configuration..."
                 @NexerqBot.Config.modules[modName.toLowerCase()] = @NexerqBot.Modules[modName].defaultConfig

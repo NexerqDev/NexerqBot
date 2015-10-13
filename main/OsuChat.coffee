@@ -9,7 +9,7 @@ class module.exports
             username: 'Nexerq'
             password: 'https://osu.ppy.sh/p/irc'
 
-    connect: =>
+    connect: ->
         @client = @NexerqBot.Clients.OsuChat = new Osu.chat
             username: @NexerqBot.Config.osuchat.login.username
             password: @NexerqBot.Config.osuchat.login.password

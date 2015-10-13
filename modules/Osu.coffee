@@ -12,7 +12,7 @@ class module.exports
                 channel: 'osuname'
                 anotherChannel: 'theirosuname'
     
-    checkForBeatmaps: (channel, user, message) =>
+    checkForBeatmaps: (channel, user, message) ->
         cleanChannel = channel.replace '#', ''
         # Check for beatmap links
         osuMapRegex = osuMapMatch.exec(message) # Run the regex

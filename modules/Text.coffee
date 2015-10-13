@@ -10,7 +10,7 @@ class module.exports
             @checkForUserCommands channel, user, message
             @checkForModCommands channel, user, message
 
-    cacheCommandsFromDB: =>
+    cacheCommandsFromDB: ->
         @commands = {}
         @NexerqBot.Database.Model.commands.findAll
             attributes: ['channel', 'command']
@@ -20,7 +20,7 @@ class module.exports
                     @commands[data.channel] = []
                 @commands[data.channel].push data.command
 
-    checkForUserCommands: (channel, user, message) =>
+    checkForUserCommands: (channel, user, message) ->
         cleanChannel = channel.replace('#', '')
         command = message.split(' ')[0]
         if @commands[cleanChannel]
@@ -33,20 +33,20 @@ class module.exports
                 .then (dbResp) =>
                     @NexerqBot.Clients.Twitch.say channel, dbResp.output
 
-    addChannelCommand: (channel, command, output, username) =>
+    addChannelCommand: (channel, command, output, username) ->
         return @NexerqBot.Database.Model.commands.create
             channel: channel
             command: command
             output: output
             addedBy: username
 
-    removeChannelCommand: (channel, command) =>
+    removeChannelCommand: (channel, command) ->
         return @NexerqBot.Database.Model.commands.destroy
             where:
                 channel: channel
                 command: command
 
-    checkForModCommands: (channel, user, message) =>
+    checkForModCommands: (channel, user, message) ->
         cleanChannel = channel.replace('#', '')
         command = message.split(' ')
         return if command[0] isnt @NexerqBot.Config.modules.global.commandprefix
