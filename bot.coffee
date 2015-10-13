@@ -28,13 +28,15 @@ nesh.start
         repl.context.NexerqBot = NexerqBot
 console.log '\n'
 
-
+mainMods = []
 # Load the main client modules (for files in ./main)
 for mod in fs.readdirSync './main'
     continue if path.extname mod isnt '.coffee'
     modName = mod.replace '.coffee', ''
     mod = require "./main/#{modName}"
     NexerqBot[modName] = new mod NexerqBot
+    mainMods.push modName
+NexerqBot.Logging.info 'NexerqBot', "Main client modules loaded: #{mainMods.join ', '}."
 
 
 # Load config and load DB ready for modules
@@ -48,6 +50,7 @@ for mod in fs.readdirSync './modules'
     modName = mod.replace '.coffee', ''
     mod = require "./modules/#{modName}"
     NexerqBot.Modules[modName] = new mod NexerqBot
+NexerqBot.Logging.info 'NexerqBot', "Handler modules loaded: #{Object.keys(NexerqBot.Modules).join ', '}."
 
 
 # Connect clients and init clients
