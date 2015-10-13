@@ -3,11 +3,12 @@ colors = require 'colors'
 
 class module.exports
     constructor: (@NexerqBot) ->
+
+    connect: =>
         @client = @NexerqBot.Clients.OsuChat = new Osu.chat
             username: @NexerqBot.Config.osu.chat.login.username
             password: @NexerqBot.Config.osu.chat.login.password
-
-    connect: =>
+            
         @client.on 'connected', =>
             @NexerqBot.Logging.info 'osu! Chat', 'Connected to osu!bancho IRC.'
 

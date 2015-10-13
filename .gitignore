@@ -6,5 +6,4 @@ node_modules
 .DS_Store
 
 # Config
-config/config.coffee
-config/sequelize.json
+config/config.cson

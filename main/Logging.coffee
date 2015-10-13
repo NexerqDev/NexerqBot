@@ -15,13 +15,17 @@ class module.exports
         @log modulename, 'info'.green, message
 
     error: (modulename, message) =>
-        @log modulename, 'error'.red, message
+        @log modulename, 'ERROR'.red, message
 
     warn: (modulename, message) =>
         @log modulename, 'warn'.yellow, message
 
     success: (modulename, message) =>
-        @log modulename, 'success'.green, message
+        @log modulename, 'SUCCESS'.green, message
 
     fail: (modulename, message) =>
-        @log modulename, 'fail'.red, message
+        @log modulename, 'FAIL'.red, message
+
+    fatal: (modulename, message) =>
+        @log modulename, 'FATAL'.red, message
+        process.exit 1

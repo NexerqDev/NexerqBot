@@ -4,6 +4,8 @@ Sequelize = require 'sequelize'
 
 class module.exports
     constructor: (@NexerqBot) ->
+    
+    init: ->
         db = {}
         # Init sequelize
         sequelize = new Sequelize @NexerqBot.Config.database.database, @NexerqBot.Config.database.username, @NexerqBot.Config.database.password, @NexerqBot.Config.database
