@@ -28,20 +28,15 @@ nesh.start
         repl.context.NexerqBot = NexerqBot
 console.log '\n'
 
-mainMods = []
+NexerqBot.mainModNames = []
 # Load the main client modules (for files in ./main)
 for mod in fs.readdirSync './main'
     continue if path.extname mod isnt '.coffee'
     modName = mod.replace '.coffee', ''
     mod = require "./main/#{modName}"
     NexerqBot[modName] = new mod NexerqBot
-    mainMods.push modName
-NexerqBot.Logging.info 'NexerqBot', "Main client modules loaded: #{mainMods.join ', '}."
-
-
-# Load config and load DB ready for modules
-NexerqBot.ConfigIO.load()
-NexerqBot.Database.init()
+    NexerqBot.mainModNames.push modName
+NexerqBot.Logging.info 'NexerqBot', "Main client modules loaded: #{NexerqBot.mainModNames.join ', '}."
 
 
 # Load modules (chat handlers, etc) [for files in ./modules]
@@ -53,7 +48,14 @@ for mod in fs.readdirSync './modules'
 NexerqBot.Logging.info 'NexerqBot', "Handler modules loaded: #{Object.keys(NexerqBot.Modules).join ', '}."
 
 
-# Connect clients and init clients
-NexerqBot.Twitch.connect()
-NexerqBot.OsuChat.connect()
-NexerqBot.OsuApi.init()
+# Load config and then start clients and db
+NexerqBot.ConfigIO.load ->
+    NexerqBot.Database.init()
+
+    # Connect clients and init clients
+    NexerqBot.Twitch.connect()
+    NexerqBot.OsuChat.connect()
+    NexerqBot.OsuApi.init()
+
+    # Event? (make sure its ready for some modules that need db access)
+    NexerqBot.Events.emit 'bot.ready'

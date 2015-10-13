@@ -8,4 +8,4 @@ class module.exports
         
     init: ->
         @client = @NexerqBot.Clients.OsuApi = new Osu.api
-            apiKey: @NexerqBot.Config.osu.api.key
+            apiKey: @NexerqBot.Config.osuapi.key

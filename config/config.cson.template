@@ -1,26 +1,29 @@
-twitch:
-    chat:
-        login:
-            username: 'NexerqBot'
-            password: 'oauth:'
-        channels: ['#channel']
 database:
-    username: 'postgres'
-    password: 'postgres'
-    database: 'nexerqbot'
-    host: '127.0.0.1'
-    dialect: 'postgres'
-osu:
-    chat:
-        login:
-            username: 'Nexerq'
-            password: 'https://osu.ppy.sh/p/irc'
-    api:
-        key: 'https://osu.ppy.sh/api'
+	username: "postgres"
+	password: "postgres"
+	database: "nexerqbot"
+	host: "127.0.0.1"
+	dialect: "postgres"
+osuapi:
+	key: "https://osu.ppy.sh/api"
+osuchat:
+	login:
+		username: "Nexerq"
+		password: "https://osu.ppy.sh/p/irc"
+twitch:
+	chat:
+		login:
+			username: "NexerqBot"
+			password: "oauth:"
+		channels: [
+			"#channel"
+		]
 modules:
-    global:
-        commandprefix: '!nb'
-    osu:
-        requests:
-            channel:
-                twitchChannelName: 'TheirOsuName'
+	global:
+		commandprefix: "!nb"
+	osu:
+		requests:
+			channel:
+				Nexerq: "n2468txd"
+				channel: "osuname"
+				anotherChannel: "theirosuname"

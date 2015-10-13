@@ -8,7 +8,9 @@ class module.exports
     defaultConfig:
         requests:
             channel:
-                n2468txd: 'Nexerq'
+                Nexerq: 'n2468txd'
+                channel: 'osuname'
+                anotherChannel: 'theirosuname'
     
     checkForBeatmaps: (channel, user, message) =>
         cleanChannel = channel.replace '#', ''

@@ -2,8 +2,9 @@
 
 class module.exports
     constructor: (@NexerqBot) ->
-        @commands = {}
-        @cacheCommandsFromDB()
+        @NexerqBot.Events.on 'bot.ready', =>
+            @commands = {}
+            @cacheCommandsFromDB()
 
         @NexerqBot.Events.on 'twitch.chat', (channel, user, message) => 
             @checkForUserCommands channel, user, message
