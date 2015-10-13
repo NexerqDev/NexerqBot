@@ -20,7 +20,7 @@ class module.exports
         config =
             logging: (str) ->
                 msg = str.split ':'
-                return @NexerqBot.Logging.logNoType 'Database', "#{msg[0].yellow}:#{msg[1]}" if msg[1]
+                return @NexerqBot.Logging.logNoType 'Database', "#{msg[0].cyan}:#{msg[1]}" if msg[1]
                 @NexerqBot.Logging.logNoType 'Database', str.yellow
 
             dialect: 'postgres'

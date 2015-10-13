@@ -24,6 +24,6 @@ modules:
 	osu:
 		requests:
 			channel:
-				Nexerq: "n2468txd"
+				n2468txd: "Nexerq"
 				channel: "osuname"
 				anotherChannel: "theirosuname"
