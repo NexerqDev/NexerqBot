@@ -31,11 +31,11 @@ class module.exports
         sequelize = new Sequelize @NexerqBot.Config.database.database, @NexerqBot.Config.database.username, @NexerqBot.Config.database.password, config
 
         # Load db models
-        for modelFile in fs.readdirSync path.resolve __dirname, '../', 'models'
+        for modelFile in fs.readdirSync path.resolve __dirname, '../', 'database', 'models'
             continue if path.extname modelFile isnt '.coffee'
 
             # Follow sequelize template style import
-            model = sequelize['import'] path.resolve __dirname, '../', 'models', modelFile
+            model = sequelize['import'] path.resolve __dirname, '../', 'database', 'models', modelFile
             db[model.name] = model
 
         # db associate (as per sequelize template)

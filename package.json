@@ -5,7 +5,9 @@
   "main": "bot.coffee",
   "scripts": {
     "start": "./node_modules/coffee-script/bin/coffee bot.coffee",
-    "migrate": "./node_modules/sequelize-cli/bin/sequelize db:migrate --config './config/sequelize.json'",
+    "generateSequelizeConfig": "./node_modules/coffee-script/bin/coffee ./database/prepareForMigrations.coffee",
+    "migrate": "npm run generateSequelizeConfig && ./node_modules/sequelize-cli/bin/sequelize db:migrate --coffee --config './database/sequelize.json' --migrations-path './database/migrations' --models-path './database/models' && rm ./database/sequelize.json",
+    "undoMigration": "npm run generateSequelizeConfig && ./node_modules/sequelize-cli/bin/sequelize db:migrate:undo --coffee --config './database/sequelize.json' --migrations-path './database/migrations' --models-path './database/models' && rm ./database/sequelize.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nicholas Tay <nexerq@gmail.com> (http://nicholastay.github.io)",
@@ -13,6 +15,7 @@
     "coffee-script": "^1.10.0",
     "colors": "^1.1.2",
     "cson": "^3.0.2",
+    "js2coffee": "^2.1.0",
     "nesh": "^1.6.0",
     "nodesu": "^0.2.1",
     "pg": "^4.4.2",
