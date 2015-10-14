@@ -26,4 +26,9 @@ class module.exports
 
         @client.connect()
 
-    say: (to, message) -> @client.client.say to, message
+    say: (to, message) -> 
+        try
+            @client.client.say to, message
+        catch e
+            return @NexerqBot.Logging.warn 'osu! Chat', 'osu! chat client is not connected, no message was sent.'
+        @NexerqBot.Logging.logNoType 'osu! Chat', "#{colors.yellow "#{@NexerqBot.Config.osuchat.login.username} -> #{to}"} #{message}"

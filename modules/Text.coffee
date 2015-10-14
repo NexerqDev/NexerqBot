@@ -1,28 +1,31 @@
 # Text commands, mods and broadcaster can create, remove and modify them.
+Module = require '../models/Module'
 
-class module.exports
-    constructor: (@NexerqBot) ->
-        @NexerqBot.Events.on 'bot.ready', =>
-            @commands = {}
-            @cacheCommandsFromDB()
+class module.exports extends Module
+    onBotReady: ->
+        @commands = {}
+        @cacheCommandsFromDB()
 
-        @NexerqBot.Events.on 'twitch.chat', (channel, user, message) => 
-            @checkForUserCommands channel, user, message
-            @checkForModCommands channel, user, message
+    onCommand: (channel, user, command, tail) ->
+        @checkForUserCommands channel, user, command
+
+    onGlobalCommand: (channel, user, command, tail) ->
+        @checkForModCommands channel, user, command, tail
 
     cacheCommandsFromDB: ->
         @commands = {}
+        for channel in @NexerqBot.Config.twitch.chat.channels
+            clean = channel.replace '#', ''
+            @commands[clean] = []
+            
         @NexerqBot.Database.Model.commands.findAll
             attributes: ['channel', 'command']
         .then (commands) =>
             for data in commands
-                if not @commands[data.channel]
-                    @commands[data.channel] = []
                 @commands[data.channel].push data.command
 
-    checkForUserCommands: (channel, user, message) ->
-        cleanChannel = channel.replace('#', '')
-        command = message.split(' ')[0]
+    checkForUserCommands: (channel, user, command) ->
+        cleanChannel = channel.replace '#', ''
         if @commands[cleanChannel]
             if command in @commands[cleanChannel]
                 @NexerqBot.Database.Model.commands.findOne
@@ -31,7 +34,7 @@ class module.exports
                         command: command
                     attributes: ['output']
                 .then (dbResp) =>
-                    @NexerqBot.Clients.Twitch.say channel, dbResp.output
+                    @NexerqBot.Twitch.say channel, dbResp.output
 
     addChannelCommand: (channel, command, output, username) ->
         return @NexerqBot.Database.Model.commands.create
@@ -46,29 +49,35 @@ class module.exports
                 channel: channel
                 command: command
 
-    checkForModCommands: (channel, user, message) ->
-        cleanChannel = channel.replace('#', '')
-        command = message.split(' ')
-        return if command[0] isnt @NexerqBot.Config.modules.global.commandprefix
-        return if not @NexerqBot.Modules.User.isChatMod(cleanChannel, user)
-        return if not command[1] is 'command' and not command[2] and not command[3] # command[2] and [3] make sure third and fourth params arent falsy; command[3] is the command
-        switch command[2]
+    checkForModCommands: (channel, user, command, tail) ->
+        cleanChannel = channel.replace '#', ''
+        tail = tail.split ' '
+        return if not @NexerqBot.Modules.User.isChatMod cleanChannel, user
+        return if command isnt 'command' and not tail[0] and not tail[1]
+
+        # Command: 'command'
+        # tail[0]: 'add' or 'remove'
+        # tail[1]: command itself
+        # tail[2]: command output
+
+        switch tail[0]
             when 'add'
                 # Add command
-                break if not command[4]
-                if command[3] in @commands[cleanChannel]
-                    @NexerqBot.Clients.Twitch.say channel, 'The command you are trying to add already exists. Nothing has been changed.'
+                break if not tail[2]
+                if tail[1] in @commands[cleanChannel]
+                    @NexerqBot.Twitch.say channel, 'The command you are trying to add already exists. Nothing has been changed.'
                 else
-                    @addChannelCommand cleanChannel, command[3], command[4], user.username
+                    @addChannelCommand cleanChannel, tail[1], tail[2], user.username
                     .then =>
                         @cacheCommandsFromDB()
-                        @NexerqBot.Clients.Twitch.say channel, 'Command was added to the channel\'s command set.'
+                        @NexerqBot.Twitch.say channel, 'Command was added to the channel\'s command set.'
                 break
             when 'remove'
-                if command[3] not in @commands[cleanChannel]
-                    @NexerqBot.Clients.Twitch.say channel, 'The command you are trying to remove does not exist. Nothing has been changed.'
+                # Remove command
+                if tail[1] not in @commands[cleanChannel]
+                    @NexerqBot.Twitch.say channel, 'The command you are trying to remove does not exist. Nothing has been changed.'
                 else
-                    @removeChannelCommand cleanChannel, command[3]
+                    @removeChannelCommand cleanChannel, tail[1]
                     .then =>
                         @cacheCommandsFromDB()
-                        @NexerqBot.Clients.Twitch.say channel, 'Command was removed from the channel\'s command set.'
+                        @NexerqBot.Twitch.say channel, 'Command was removed from the channel\'s command set.'

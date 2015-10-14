@@ -1,16 +1,15 @@
+Module = require '../models/Module'
 osuMapMatch = /osu.ppy.sh\/(s|b)\/(\d+)/i
 
-class module.exports
-    constructor: (@NexerqBot) ->
-        @NexerqBot.Events.on 'twitch.chat', (channel, user, message) => 
-            @checkForBeatmaps channel, user, message
-
+class module.exports extends Module
     defaultConfig:
         requests:
             channel:
                 n2468txd: "Nexerq"
                 channel: 'osuname'
                 anotherChannel: 'theirosuname'
+
+    onMessage: (channel, user, message) -> @checkForBeatmaps channel, user, message
     
     checkForBeatmaps: (channel, user, message) ->
         cleanChannel = channel.replace '#', ''
