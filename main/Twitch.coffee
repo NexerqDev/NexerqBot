@@ -26,11 +26,11 @@ class module.exports
         # Set up events
         @client.on 'chat', (channel, user, message) =>
             @NexerqBot.Logging.logNoType 'Twitch Chat', "#{colors.yellow channel} #{colors.green user['display-name']}: #{message}"
-            @NexerqBot.Events.emit 'twitch.chat', channel, user, message
+            @NexerqBot.Events.emit 'twitch.chat', channel, user, message if user.username.toLowerCase() isnt @NexerqBot.Config.twitch.chat.login.username.toLowerCase()
 
         @client.on 'action', (channel, user, message) =>
             @NexerqBot.Logging.logNoType 'Twitch Chat', "#{colors.yellow channel} #{colors.green "* #{user['display-name']} #{message}"}"
-            @NexerqBot.Events.emit 'twitch.action', channel, user, message
+            @NexerqBot.Events.emit 'twitch.action', channel, user, message if user.username.toLowerCase() isnt @NexerqBot.Config.twitch.chat.login.username.toLowerCase()
 
         @client.on 'connected', =>
             @NexerqBot.Logging.info 'Twitch Chat', 'Connected to twitch chat servers.'

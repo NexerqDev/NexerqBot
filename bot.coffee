@@ -50,7 +50,7 @@ NexerqBot.Logging.info 'NexerqBot', "Handler modules loaded: #{Object.keys(Nexer
 
 # Load config and then start clients and db
 NexerqBot.ConfigIO.load ->
-    NexerqBot.Database.init()
+    NexerqBot.Redis.init()
 
     # Connect clients and init clients
     NexerqBot.Twitch.connect()
