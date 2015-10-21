@@ -54,6 +54,7 @@ NexerqBot.ConfigIO.load ->
 
     # Connect clients and init clients
     NexerqBot.Twitch.connect()
+    NexerqBot.TwitchWhisp.connect()
     NexerqBot.OsuChat.connect()
     NexerqBot.OsuApi.init()
 
