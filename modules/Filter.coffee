@@ -21,11 +21,11 @@ class module.exports extends Module
         @NexerqBot.Redis.listGetAsync 'filter', cleanChannel, (err, reply) =>
             return if err or not reply or reply.length is 0
             for filter in reply
-                timeoutIfStringFound filter, user, message
+                @timeoutIfStringFound filter, channel, user, message
             for filter in @globalFilters
-                timeoutIfStringFound filter, user, message
+                @timeoutIfStringFound filter, channel, user, message
                 
-    timeoutIfStringFound: (filter, user, message) ->
+    timeoutIfStringFound: (filter, channel, user, message) ->
         filterPattern = new RegExp filter
         if filterPattern.test message
             @NexerqBot.Logging.info 'Filter', "Timing out #{user.username} in #{channel} for unwanted filtered content..."
