@@ -20,6 +20,6 @@ class module.exports
                 if splitMessage[0] is @NexerqBot.Config.modules.global.commandprefix
                     @onGlobalCommand channel, user, splitMessage[1], splitMessage.slice(2).join(' ') if typeof @onGlobalCommand is 'function'
 
-        @NexerqBot.Events.on 'twitchwhisp.whisper', from, message if typeof @onWhisper is 'function'
+        @NexerqBot.Events.on 'twitchwhisp.whisper', (from, message) => @onWhisper from, message if typeof @onWhisper is 'function'
 
         @NexerqBot.Events.on 'bot.ready', => @onBotReady() if typeof @onBotReady is 'function'

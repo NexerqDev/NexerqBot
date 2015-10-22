@@ -34,4 +34,6 @@ class module.exports
     listGetAsync: (module, key, cb) ->
         # Get a list (https://groups.google.com/forum/#!topic/nodejs/qQf5bGkAi90)
         # Get the first index to the last index basically
-        @client.lrange "NexerqBot:#{module}:#{key}", 0, -1, cb 
+        @client.lrange "NexerqBot:#{module}:#{key}", 0, -1, cb
+
+    incrAsync: (module, key, cb) -> @client.incr "NexerqBot:#{module}:#{key}", cb

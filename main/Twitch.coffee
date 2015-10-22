@@ -38,4 +38,6 @@ class module.exports
 
         @client.connect()
 
-    say: (to, message) -> @client.say to, message
+    say: (to, message) ->
+        @NexerqBot.Redis.incrAsync 'statistics', 'messages_sent'
+        @client.say to, message
